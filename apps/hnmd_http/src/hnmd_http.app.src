@@ -1,16 +1,20 @@
-{application, hnmd_http,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, { hnmd_http_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
-
-  {maintainers, []},
-  {licenses, []},
-  {links, []}
- ]}.
+{application, hnmd_http, [
+	{description, "Network Management HTTP interface"},
+	{vsn, "0.1.0"},
+	{registered, []},
+	{mod, { hnmd_http_app, []}},
+	{applications, [
+		kernel,
+		stdlib,
+		mnesia,
+		erlydtl,
+		cowboy,
+		lager,
+		jsx
+	]},
+	{env,[]},
+	{modules, []},
+	{maintainers, []},
+	{licenses, []},
+	{links, []}
+]}.

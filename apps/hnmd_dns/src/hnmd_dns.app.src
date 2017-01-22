@@ -1,16 +1,18 @@
-{application, hnmd_dns,
- [{description, "An OTP application"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, { hnmd_dns_app, []}},
-  {applications,
-   [kernel,
-    stdlib
-   ]},
-  {env,[]},
-  {modules, []},
-
-  {maintainers, []},
-  {licenses, []},
-  {links, []}
- ]}.
+{application, hnmd_dns, [
+	{description, "A DNS Server and Caching Proxy"},
+	{vsn, "0.1.0"},
+	{registered, []},
+	{mod, { hnmd_dns_app, []}},
+	{applications, [
+		kernel,
+		stdlib,
+		mnesia,
+		hnmd_util,
+		lager
+	]},
+	{env,[]},
+	{modules, []},
+	{maintainers, []},
+	{licenses, []},
+	{links, []}
+]}.

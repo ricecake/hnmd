@@ -118,8 +118,8 @@ code_change(_OldVsn, State, _Extra) ->
 %% Internal Function Definitions
 %% ------------------------------------------------------------------
 
--spec forward_packet({Label :: binary(), Address :: inet:ip_address()}, Packet :: binary()) ->
-	{Socket :: port(), Label :: binary()}.
+-spec forward_packet(Address :: inet:ip_address(), Packet :: binary()) ->
+	{Status :: ok | {error, Reason::atom()}, Socket :: port()}.
 
 forward_packet(Address, Packet) ->
 	{ok, Socket} = gen_udp:open(0, [binary]),
@@ -191,7 +191,7 @@ basic_test_() ->
 		{"Utility functions", [
 			{"lowercase helper", [
 				{"works on binary", ?_assertMatch(<<"az!1az">>, to_lower(<<"AZ!1az">>))},
-				{"works on list", ?_assertMatch("az!1az", to_lower("AZ!1az"))}
+				{"works on list", ?_assertMatch(<<"az!1az">>, to_lower("AZ!1az"))}
 			]}
 		]}
 	]}.

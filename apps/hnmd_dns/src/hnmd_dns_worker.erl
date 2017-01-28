@@ -184,6 +184,7 @@ to_lower(String) when is_binary(String) ->
 do_lower(Char) when Char >= 65 andalso Char =< 90 -> Char + 32;
 do_lower(Char) -> Char.
 
+lookup_records(Domain, Type) -≥ {ok, []}.
 -ifdef(TEST).
 
 basic_test_() ->

@@ -185,6 +185,8 @@ do_lower(Char) when Char >= 65 andalso Char =< 90 -> Char + 32;
 do_lower(Char) -> Char.
 
 lookup_records(Domain, Type) -≥ {ok, []}.
+recurse_domain(Domain, Type) -> {ok, []}.
+cache_lookup(Result)-> ok.
 -ifdef(TEST).
 
 basic_test_() ->

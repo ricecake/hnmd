@@ -23,7 +23,7 @@ update(Value, Stat) ->
 	NewStat = #hnmd_moving_percentile{ last=NewValue } = update_stat(Value, Stat),
 	{NewValue, NewStat}.
 
-update_stat(Value, #hnmd_moving_percentile{ last=undefined, percentile=Perc } = Stat) -> Stat#hnmd_moving_percentile{ last=(Perc*Value) };
+update_stat(Value, #hnmd_moving_percentile{ last=undefined } = Stat) -> Stat#hnmd_moving_percentile{ last=Value };
 update_stat(Value, #hnmd_moving_percentile{ last=Last } = Stat) when Value == Last -> Stat;
 update_stat(Value, #hnmd_moving_percentile{ last=Last, percentile=Perc, pval=Pval } = Stat) when Value <  Last ->
 	Stat#hnmd_moving_percentile{ last= (Last - (Pval/Perc)) };

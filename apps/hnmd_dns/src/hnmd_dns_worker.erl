@@ -145,12 +145,12 @@ expand_dns_rec_field({Section, RRs}) -> {Section, [ clean_rr(?record_to_map(dns_
 clean_rr(#{ type := mx, data := {Prio, Exchange} } = RR) ->
 	all_rr_cleanup(RR#{ data := #{
 		priority => Prio,
-		exchange => to_lower(Exchange)
+		exchange => hnmd_util:to_lower(Exchange)
 	} });
 clean_rr(#{ type := soa,  data := {MName,RName,Serial,Refresh,Retry,Expiry,Minimum} } = RR) ->
 	all_rr_cleanup(RR#{ data := #{
-		mname   => to_lower(MName),
-		rname   => to_lower(RName),
+		mname   => hnmd_util:to_lower(MName),
+		rname   => hnmd_util:to_lower(RName),
 		serial  => Serial,
 		refresh => Refresh,
 		retry   => Retry,
@@ -158,13 +158,13 @@ clean_rr(#{ type := soa,  data := {MName,RName,Serial,Refresh,Retry,Expiry,Minim
 		minimum => Minimum
 	} });
 clean_rr(#{ type := Type, data := Data } = RR) when Type == a orelse Type == aaaa ->
-	all_rr_cleanup(RR#{ data := to_lower(inet_parse:ntoa(Data)) });
+	all_rr_cleanup(RR#{ data := hnmd_util:to_lower(inet_parse:ntoa(Data)) });
 clean_rr(#{ data := Data } = RR) when is_list(Data)  ->
 	all_rr_cleanup(RR#{ data := list_to_binary(Data) });
 clean_rr(#{ data := Data } = RR) when is_tuple(Data) ->
 	all_rr_cleanup(RR#{ data := tuple_to_list(Data) }).
 
-all_rr_cleanup(#{ domain := Domain } = RR) when is_list(Domain) -> all_rr_cleanup(RR#{ domain := to_lower(Domain) });
+all_rr_cleanup(#{ domain := Domain } = RR) when is_list(Domain) -> all_rr_cleanup(RR#{ domain := hnmd_util:to_lower(Domain) });
 all_rr_cleanup(RR) -> maps:without([cnt, tm, bm, func], RR).
 
 expand_rcode(#{ rcode := ?NOERROR  } = Header) -> Header#{ rcode := noerror  };
@@ -177,26 +177,7 @@ expand_rcode(#{ rcode := ?NOCHANGE } = Header) -> Header#{ rcode := nochange };
 expand_rcode(#{ rcode := ?BADVERS  } = Header) -> Header#{ rcode := badvers  };
 expand_rcode(Header) -> Header.
 
-to_lower(String) when is_list(String) -> list_to_binary(string:to_lower(String));
-to_lower(String) when is_binary(String) ->
-	<< <<(do_lower(Char)):8>> || <<Char:8>> <= String >>.
+%lookup_records(Domain, Type) -> {ok, []}.
+%recurse_domain(Domain, Type) -> {ok, []}.
+%cache_lookup(Result)-> ok.
 
-do_lower(Char) when Char >= 65 andalso Char =< 90 -> Char + 32;
-do_lower(Char) -> Char.
-
-lookup_records(Domain, Type) -≥ {ok, []}.
-recurse_domain(Domain, Type) -> {ok, []}.
-cache_lookup(Result)-> ok.
--ifdef(TEST).
-
-basic_test_() ->
-	{"hnmd_dns worker Tests", [
-		{"Utility functions", [
-			{"lowercase helper", [
-				{"works on binary", ?_assertMatch(<<"az!1az">>, to_lower(<<"AZ!1az">>))},
-				{"works on list", ?_assertMatch(<<"az!1az">>, to_lower("AZ!1az"))}
-			]}
-		]}
-	]}.
-
--endif.

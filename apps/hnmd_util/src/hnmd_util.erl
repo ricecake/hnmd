@@ -1,7 +1,14 @@
 -module(hnmd_util).
 
 %% API exports
--export([]).
+-export([
+	to_lower/1
+]).
+-ifdef(TEST).
+
+-include_lib("eunit/include/eunit.hrl").
+
+-endif.
 
 %%====================================================================
 %% API functions
@@ -18,3 +25,20 @@ do_lower(Char) -> Char.
 %%====================================================================
 %% Internal functions
 %%====================================================================
+
+
+
+-ifdef(TEST).
+
+basic_test_() ->
+        {"hnmd_util Tests", [
+                {"text functions", [
+                        {"lowercase helper", [
+                                {"works on binary", ?_assertMatch(<<"az!1az">>, to_lower(<<"AZ!1az">>))},
+                                {"works on list", ?_assertMatch(<<"az!1az">>, to_lower("AZ!1az"))}
+                        ]}
+                ]}
+        ]}.
+
+-endif.
+

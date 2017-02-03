@@ -101,7 +101,6 @@ handle_cast(_Msg, State) ->
 handle_info({udp, Socket, _IP, _InPortNo, ReplyPacket}, #{ sender := Sender } = State) ->
 	ok = gen_udp:close(Socket),
 	hnmd_dns_listener:send_reply(ReplyPacket, Sender),
-	io:format("~p~n~p~n", [maps:get(query, State), normalize_dns_record(ReplyPacket)]),
 	{stop, normal, State};
 handle_info(timeout, State) ->
 	{stop, normal, State};

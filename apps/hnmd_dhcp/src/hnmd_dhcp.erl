@@ -1,5 +1,6 @@
 -module(hnmd_dhcp).
 
--export([parse_dhcp/1]).
+-export([parse_dhcp/1, make_dhcp/1]).
 
 parse_dhcp(Packet)->{ok, Packet}.
+make_dhcp(Data)->{ok, Data}.

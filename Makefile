@@ -3,9 +3,8 @@ REBAR := `pwd`/rebar3
 all: test doc release
 
 compile:
-	@$(REBAR) compile
-
-doc	
+	@$(REBAR) compile     
+	
 test:
 	@$(REBAR) do xref, dialyzer, eunit, ct, cover
 

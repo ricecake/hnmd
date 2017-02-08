@@ -5,9 +5,7 @@ all: test doc release
 compile:
 	@$(REBAR) compile
 
-doc:
-	@$(REBAR) edoc
-
+doc	
 test:
 	@$(REBAR) do xref, dialyzer, eunit, ct, cover
 

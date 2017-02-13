@@ -20,7 +20,4 @@ clean:
 shell:
 	@$(REBAR) shell
 
-run:
-	@$(REBAR) run
-
 .PHONY: release test all compile clean

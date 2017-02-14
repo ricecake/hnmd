@@ -176,7 +176,7 @@ expand_rcode(#{ rcode := ?NOCHANGE } = Header) -> Header#{ rcode := nochange };
 expand_rcode(#{ rcode := ?BADVERS  } = Header) -> Header#{ rcode := badvers  };
 expand_rcode(Header) -> Header.
 
-%lookup_records(Domain, Type) -> {ok, []}.
-%recurse_domain(Domain, Type) -> {ok, []}.
-%cache_lookup(Result)-> ok.
+lookup_records(Domain, Type) -> {ok, []}.
+recurse_domain(Domain, Type) -> {ok, []}.
+cache_lookup(Result)-> ok.
 

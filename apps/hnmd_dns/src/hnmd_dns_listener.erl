@@ -87,6 +87,8 @@ handle_info({udp, Socket, IP, InPortNo, Packet}, #{ socket := Socket } = State) 
                         lager:error("Encountered ~w:~w while routing", [Type, Error])
 	end,
 	ok = inet:setopts(Socket, [{active, once}]),
+	{noreply, State};
+handle_info(_, State) ->
 	{noreply, State}.
 
 terminate(_Reason, _State) ->

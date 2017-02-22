@@ -66,7 +66,9 @@ init(Args) ->
 	Opts = application:get_env(hnmd_dns, listen_opts, []),
 	{ok, Socket} = gen_udp:open(Port, [
 		binary,
-		{active, once} |Opts
+		{active, 100},
+		{read_packets, 1000}, 
+		{recbuf, 1024*1024} |Opts
 	]),
 	{ok, Args#{ socket => Socket }}.
 
@@ -86,7 +88,7 @@ handle_info({udp, Socket, IP, InPortNo, Packet}, #{ socket := Socket } = State) 
                 Type:Error ->
                         lager:error("Encountered ~w:~w while routing", [Type, Error])
 	end,
-	ok = inet:setopts(Socket, [{active, once}]),
+	ok = inet:setopts(Socket, [{active, 1}]),
 	{noreply, State};
 handle_info(_, State) ->
 	{noreply, State}.
